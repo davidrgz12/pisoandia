@@ -489,7 +489,7 @@
       font-size: 14px;
       line-height: 1.9;
       color: var(--gray);
-      margin-bottom: 40px;
+      margin-bottom: 0;
     }
     .contact-detail {
       font-family: var(--sans);
@@ -670,7 +670,7 @@
       .map-section { grid-template-columns: 1fr; }
       .map-embed { height: 360px; }
       .map-text { padding: 56px 32px; }
-      .contact-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 32px; }
+      .contact-section { grid-template-columns: 1fr; gap: 24px; padding: 64px 24px; }
       .form-row { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 24px; text-align: center; }
       footer .footer-copy { text-align: center; }
@@ -866,8 +866,6 @@
         <span class="section-eyebrow" style="color:var(--gold)">Contacto</span>
         <h2>¿Le interesa<br>esta propiedad?</h2>
         <p>Rellene el formulario y nos pondremos en contacto con usted en menos de 24 horas para concertar una visita privada.</p>
-        <div class="contact-detail"><strong>Grupo Tomé</strong></div>
-        <div class="contact-detail">Donostia · San Sebastián</div>
       </div>
       <div class="contact-right reveal" style="transition-delay:0.15s">
         <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
