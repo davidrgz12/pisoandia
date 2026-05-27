@@ -75,8 +75,8 @@
       position: relative;
       height: 100vh;
       min-height: 680px;
-      display: flex; align-items: center;
-      padding-top: 80px;
+      display: flex; align-items: flex-start;
+      padding-top: 210px;
       overflow: hidden;
     }
     .hero-bg {
@@ -87,7 +87,7 @@
     }
     .hero-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(15,11,8,0.88) 0%, rgba(15,11,8,0.32) 50%, rgba(15,11,8,0.10) 100%);
+      background: linear-gradient(to top, rgba(15,11,8,0.92) 0%, rgba(15,11,8,0.60) 45%, rgba(15,11,8,0.42) 100%);
     }
     .hero-content {
       position: relative; z-index: 2;
@@ -731,7 +731,7 @@
       <h2>Recorre cada rincón<br><em>de la vivienda</em></h2>
     </div>
     <div class="video-wrap" id="videoWrap">
-      <video id="tourVideo" src="https://davidrgz12.github.io/pisoandia/videos/Calle%20Andia%2011%202dcha%20-%20Donostia%20-%20video%20Horizontal%2002.mp4" preload="metadata" playsinline></video>
+      <video id="tourVideo" src="https://davidrgz12.github.io/pisoandia/videos/Calle%20Andia%2011%202dcha%20-%20Donostia%20-%20video%20Horizontal%2002.mp4" poster="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/Grupo%20Tom%C3%A9%20-%20Andia%2011%20-%202dcha%20-%20Donostia%20-%20041.jpg" preload="none" playsinline></video>
       <div class="video-play-overlay" id="videoPlay" onclick="playTour()">
         <div class="video-play-btn">
           <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
