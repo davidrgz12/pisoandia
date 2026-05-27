@@ -75,8 +75,8 @@
       position: relative;
       height: 100vh;
       min-height: 680px;
-      display: flex; align-items: flex-end;
-      padding-bottom: 80px;
+      display: flex; align-items: center;
+      padding-top: 80px;
       overflow: hidden;
     }
     .hero-bg {
@@ -127,25 +127,34 @@
       color: var(--gold-light);
       letter-spacing: 0.03em;
     }
-    .hero-scroll {
-      position: absolute; bottom: 36px; right: 64px; z-index: 2;
-      display: flex; align-items: center; gap: 12px;
+    .hero-discover {
+      margin-top: 52px;
+      display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
       font-family: var(--sans); font-size: 10px; font-weight: 500;
-      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5);
-      cursor: pointer;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer; transition: color 0.3s;
+      text-decoration: none;
     }
-    .hero-scroll-line {
-      width: 48px; height: 1px;
-      background: rgba(255,255,255,0.3);
+    .hero-discover:hover { color: rgba(255,255,255,0.65); }
+    .hero-discover-line {
+      width: 1px; height: 64px;
+      background: rgba(255,255,255,0.12);
       position: relative; overflow: hidden;
     }
-    .hero-scroll-line::after {
+    .hero-discover-line::after {
       content: '';
-      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: var(--gold-light);
-      animation: slideline 2s ease-in-out infinite;
+      position: absolute; top: -100%; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold-light));
+      animation: dropper 2.2s ease-in-out infinite;
     }
-    @keyframes slideline { 0%{left:-100%} 100%{left:100%} }
+    @keyframes dropper {
+      0%   { top: -100%; opacity: 0; }
+      20%  { opacity: 1; }
+      80%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
 
     /* ─── STATS STRIP ─── */
     .stats-strip {
@@ -330,6 +339,52 @@
       border-radius: 50%;
       background: var(--gold);
       flex-shrink: 0;
+    }
+
+    /* ─── VIDEO TOUR ─── */
+    .video-section {
+      background: var(--dark);
+      padding: 80px 0 0;
+    }
+    .video-label {
+      padding: 0 64px 44px;
+    }
+    .video-label h2 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 300; color: #fff; line-height: 1.1;
+      margin-top: 14px;
+    }
+    .video-wrap {
+      position: relative; width: 100%;
+      aspect-ratio: 16/9; overflow: hidden;
+      background: #000; cursor: pointer;
+    }
+    .video-wrap video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .video-play-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      background: rgba(0,0,0,0.38);
+      transition: background 0.3s;
+    }
+    .video-play-overlay:hover { background: rgba(0,0,0,0.25); }
+    .video-play-overlay.hidden { display: none; }
+    .video-play-btn {
+      width: 84px; height: 84px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .video-play-btn svg { width: 26px; height: 26px; margin-left: 5px; fill: #fff; transition: fill 0.25s; }
+    .video-play-overlay:hover .video-play-btn { border-color: var(--gold); background: rgba(184,148,90,0.15); }
+    .video-play-overlay:hover .video-play-btn svg { fill: var(--gold-light); }
+    .video-play-label {
+      font-family: var(--sans); font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
     }
 
     /* ─── MAPA ─── */
@@ -578,6 +633,7 @@
       .feature-group { border-right: none; padding: 24px 20px; }
       .feature-group:nth-last-child(-n+3) { border-bottom: 1px solid var(--cream-2); }
       .feature-group:last-child { border-bottom: none; }
+      .video-label { padding: 0 24px 36px; }
       .map-section { grid-template-columns: 1fr; }
       .map-embed { height: 360px; }
       .map-text { padding: 56px 32px; }
@@ -610,13 +666,13 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <span class="hero-label">Vivienda exclusiva — Donostia · San Sebastián</span>
-      <h1 class="hero-address">Calle Andía, 11</h1>
+      <h1 class="hero-address">Calle Andía</h1>
       <p class="hero-city">Frente al Ayuntamiento · Vistas a la Bahía de La Concha</p>
       <p class="hero-price">2.750.000 €</p>
-    </div>
-    <div class="hero-scroll" onclick="document.getElementById('datos').scrollIntoView()">
-      <span>Descubrir</span>
-      <div class="hero-scroll-line"></div>
+      <a class="hero-discover" onclick="document.getElementById('datos').scrollIntoView({behavior:'smooth'})">
+        <span>Descubrir</span>
+        <div class="hero-discover-line"></div>
+      </a>
     </div>
   </section>
 
@@ -665,6 +721,23 @@
     </div>
     <div class="gallery-track-wrap" id="galleryWrap">
       <div class="gallery-track" id="galleryTrack"></div>
+    </div>
+  </section>
+
+  <!-- VIDEO TOUR -->
+  <section class="video-section" id="tour">
+    <div class="video-label reveal">
+      <span class="section-eyebrow">Tour virtual</span>
+      <h2>Recorre cada rincón<br><em>de la vivienda</em></h2>
+    </div>
+    <div class="video-wrap" id="videoWrap">
+      <video id="tourVideo" src="https://davidrgz12.github.io/pisoandia/videos/Calle%20Andia%2011%202dcha%20-%20Donostia%20-%20video%20Horizontal%2002.mp4" preload="metadata" playsinline></video>
+      <div class="video-play-overlay" id="videoPlay" onclick="playTour()">
+        <div class="video-play-btn">
+          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+        </div>
+        <span class="video-play-label">Reproducir tour</span>
+      </div>
     </div>
   </section>
 
@@ -912,6 +985,15 @@
       if (e.key === 'ArrowRight') lightboxNav(1);
       if (e.key === 'ArrowLeft') lightboxNav(-1);
     });
+
+    // Video tour
+    function playTour() {
+      const video = document.getElementById('tourVideo');
+      const overlay = document.getElementById('videoPlay');
+      overlay.classList.add('hidden');
+      video.controls = true;
+      video.play();
+    }
 
     // Form submit
     function submitForm(e) {
