@@ -786,13 +786,7 @@
       <h2>Recorre cada rincón<br><em>de la vivienda</em></h2>
     </div>
     <div class="video-wrap" id="videoWrap">
-      <video id="tourVideo" src="https://davidrgz12.github.io/pisoandia/videos/Calle%20Andia%2011%202dcha%20-%20Donostia%20-%20video%20Horizontal%2002.mp4" poster="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/Grupo%20Tom%C3%A9%20-%20Andia%2011%20-%202dcha%20-%20Donostia%20-%20041.jpg" preload="none" playsinline></video>
-      <div class="video-play-overlay" id="videoPlay" onclick="playTour()">
-        <div class="video-play-btn">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <span class="video-play-label">Reproducir tour</span>
-      </div>
+      <video id="tourVideo" src="https://davidrgz12.github.io/pisoandia/videos/Calle%20Andia%2011%202dcha%20-%20Donostia%20-%20video%20Horizontal%2002.mp4" poster="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/Grupo%20Tom%C3%A9%20-%20Andia%2011%20-%202dcha%20-%20Donostia%20-%20041.jpg" preload="none" muted loop playsinline controls></video>
     </div>
   </section>
 
@@ -1034,14 +1028,18 @@
       if (e.key === 'ArrowLeft') lightboxNav(-1);
     });
 
-    // Video tour
-    function playTour() {
-      const video = document.getElementById('tourVideo');
-      const overlay = document.getElementById('videoPlay');
-      overlay.classList.add('hidden');
-      video.controls = true;
-      video.play();
-    }
+    // Video tour — autoplay on scroll into view
+    const tourVideo = document.getElementById('tourVideo');
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tourVideo.play().catch(() => {});
+        } else {
+          tourVideo.pause();
+        }
+      });
+    }, { threshold: 0.3 });
+    videoObserver.observe(tourVideo);
 
     // Form submit
     function submitForm(e) {
