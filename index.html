@@ -341,6 +341,37 @@
       flex-shrink: 0;
     }
 
+    /* ─── CTA BAR ─── */
+    .cta-bar {
+      padding: 64px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .cta-bar.light { background: var(--cream-2); }
+    .cta-bar.dark  { background: var(--dark); }
+    .btn-primary {
+      font-family: var(--sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      background: var(--gold); color: var(--dark);
+      border: 1px solid var(--gold);
+      padding: 18px 40px; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+      display: inline-block; white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-outline {
+      font-family: var(--sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      background: none; padding: 18px 40px;
+      cursor: pointer; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block; white-space: nowrap;
+    }
+    .cta-bar.light .btn-outline { color: var(--dark); border: 1px solid rgba(0,0,0,0.25); }
+    .cta-bar.light .btn-outline:hover { border-color: var(--dark); }
+    .cta-bar.dark  .btn-outline { color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.25); }
+    .cta-bar.dark  .btn-outline:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+
     /* ─── VIDEO TOUR ─── */
     .video-section {
       background: var(--dark);
@@ -633,6 +664,8 @@
       .feature-group { border-right: none; padding: 24px 20px; }
       .feature-group:nth-last-child(-n+3) { border-bottom: 1px solid var(--cream-2); }
       .feature-group:last-child { border-bottom: none; }
+      .cta-bar { padding: 48px 24px; flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-outline { text-align: center; padding: 16px 24px; }
       .video-label { padding: 0 24px 36px; }
       .map-section { grid-template-columns: 1fr; }
       .map-embed { height: 360px; }
@@ -720,6 +753,12 @@
     </div>
   </section>
 
+  <!-- CTA 1 -->
+  <div class="cta-bar light reveal">
+    <a href="#contacto" class="btn-primary">Me interesa la vivienda</a>
+    <a href="#contacto" class="btn-outline">Solicitar más información</a>
+  </div>
+
   <!-- GALLERY -->
   <section class="gallery-section" id="galeria">
     <div class="gallery-header">
@@ -793,6 +832,12 @@
     </div>
   </section>
 
+  <!-- CTA 2 -->
+  <div class="cta-bar dark reveal">
+    <a href="#contacto" class="btn-primary">Me interesa la vivienda</a>
+    <a href="#contacto" class="btn-outline">Solicitar más información</a>
+  </div>
+
   <!-- MAPA -->
   <section class="map-section" id="ubicacion">
     <div class="map-text reveal">
@@ -828,23 +873,13 @@
       </div>
       <div class="contact-right reveal" style="transition-delay:0.15s">
         <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
-          <div class="form-row">
-            <div class="form-field">
-              <label>Nombre completo</label>
-              <input type="text" placeholder="Su nombre" required>
-            </div>
-            <div class="form-field">
-              <label>Teléfono</label>
-              <input type="tel" placeholder="+34 600 000 000">
-            </div>
+          <div class="form-field">
+            <label>Nombre completo</label>
+            <input type="text" placeholder="Su nombre" required>
           </div>
           <div class="form-field">
-            <label>Email</label>
-            <input type="email" placeholder="correo@ejemplo.com" required>
-          </div>
-          <div class="form-field">
-            <label>Mensaje</label>
-            <textarea placeholder="Indíquenos sus preferencias o disponibilidad para visitar la propiedad…"></textarea>
+            <label>WhatsApp</label>
+            <input type="tel" placeholder="+34 600 000 000" required>
           </div>
           <button type="submit" class="form-submit">Enviar solicitud</button>
         </form>
