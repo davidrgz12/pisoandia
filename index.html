@@ -220,9 +220,9 @@
     .intro-text p + p { margin-top: 16px; }
 
     /* ─── GALLERY ─── */
-    .gallery-section { background: var(--dark); padding: 80px 0 0; }
+    .gallery-section { background: var(--dark); padding: 80px 0 64px; }
     .gallery-header {
-      padding: 0 64px 56px;
+      padding: 0 64px 48px;
       display: flex; align-items: flex-end; justify-content: space-between;
     }
     .gallery-header h2 {
@@ -232,36 +232,47 @@
       color: #fff;
       line-height: 1.1;
     }
-    .gallery-header p {
-      font-size: 13px;
-      color: var(--gray);
-      text-align: right;
+    .gallery-controls {
+      display: flex; align-items: center; gap: 16px;
     }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 360px;
-      gap: 2px;
+    .gallery-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.55);
+      width: 48px; height: 48px;
+      font-size: 18px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center;
     }
-    .gallery-item {
+    .gallery-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+    .gallery-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
+    .gallery-counter {
+      font-family: var(--sans);
+      font-size: 11px; letter-spacing: 0.15em;
+      color: var(--gray); min-width: 48px; text-align: center;
+    }
+    .gallery-track-wrap {
       overflow: hidden;
-      cursor: pointer;
-      position: relative;
+      padding: 0 64px;
+      cursor: grab; user-select: none;
     }
-    .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
+    .gallery-track-wrap.dragging { cursor: grabbing; }
+    .gallery-track {
+      display: flex; gap: 10px;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      will-change: transform;
+    }
+    .gallery-slide {
+      flex: 0 0 calc(50% - 5px);
+      height: 480px; overflow: hidden;
+      cursor: pointer; position: relative;
+    }
+    .gallery-slide img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
       transition: transform 0.6s ease, filter 0.4s ease;
-      filter: brightness(0.92);
+      filter: brightness(0.88); pointer-events: none;
     }
-    .gallery-item:hover img {
-      transform: scale(1.06);
-      filter: brightness(1.02);
-    }
-    .gallery-item.wide  { grid-column: span 2; }
-    .gallery-item.tall  { grid-row: span 2; }
+    .gallery-slide:hover img { transform: scale(1.04); filter: brightness(1.0); }
 
     /* ─── CARACTERÍSTICAS ─── */
     .features {
@@ -559,8 +570,8 @@
       .intro { grid-template-columns: 1fr; }
       .intro-image { height: 420px; }
       .intro-text { padding: 56px 32px; }
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 280px; }
-      .gallery-item.wide { grid-column: span 1; }
+      .gallery-track-wrap { padding: 0 24px; }
+      .gallery-slide { flex: 0 0 calc(80% - 5px); height: 360px; }
       .features { padding: 80px 24px; }
       .features-grid { grid-template-columns: 1fr; }
       .feature-group { border-right: none; }
@@ -573,15 +584,13 @@
       .form-row { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 24px; text-align: center; }
       footer .footer-copy { text-align: center; }
-      .gallery-header { padding: 0 24px 40px; flex-direction: column; align-items: flex-start; gap: 8px; }
+      .gallery-header { padding: 0 24px 40px; flex-direction: column; align-items: flex-start; gap: 16px; }
     }
 
     @media (max-width: 600px) {
       .hero-content { padding: 0 24px; }
       .hero-scroll { right: 24px; }
-      .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-item.wide { grid-column: span 1; }
-      .gallery-item.tall { grid-row: span 1; }
+      .gallery-slide { flex: 0 0 calc(90% - 5px); height: 300px; }
     }
   </style>
 </head>
@@ -647,21 +656,14 @@
   <section class="gallery-section" id="galeria">
     <div class="gallery-header">
       <h2 class="reveal">Galería<br><em>de imágenes</em></h2>
-      <p class="reveal" style="transition-delay:0.15s">Haz clic en cualquier imagen<br>para ampliarla</p>
+      <div class="gallery-controls reveal" style="transition-delay:0.15s">
+        <button class="gallery-btn" id="galleryPrev" aria-label="Anterior">&#8592;</button>
+        <span class="gallery-counter" id="galleryCounter">1 / 20</span>
+        <button class="gallery-btn" id="galleryNext" aria-label="Siguiente">&#8594;</button>
+      </div>
     </div>
-    <div class="gallery-grid" id="galleryGrid">
-      <div class="gallery-item wide" data-idx="0"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/hero2.jpg" alt="Salón comedor con vistas al Ayuntamiento"></div>
-      <div class="gallery-item" data-idx="1"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/040.jpg" alt="Vista al Ayuntamiento y Monte Urgull"></div>
-      <div class="gallery-item" data-idx="2"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/020.jpg" alt="Salón con sofá y cocina"></div>
-      <div class="gallery-item wide" data-idx="3"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/030.jpg" alt="Cocina y comedor con isla de mármol"></div>
-      <div class="gallery-item" data-idx="4"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/050.jpg" alt="Cocina detalle mármol Calacatta"></div>
-      <div class="gallery-item" data-idx="5"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/070.jpg" alt="Baño suite doble lavabo negro"></div>
-      <div class="gallery-item" data-idx="6"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/060.jpg" alt="Dormitorio con lámparas rojas"></div>
-      <div class="gallery-item wide" data-idx="7"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/080.jpg" alt="Dormitorio principal"></div>
-      <div class="gallery-item" data-idx="8"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/100.jpg" alt="Dormitorio cabecero de madera"></div>
-      <div class="gallery-item" data-idx="9"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/090.jpg" alt="Baño suite mármol blanco"></div>
-      <div class="gallery-item" data-idx="10"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/110.jpg" alt="Dormitorio doble"></div>
-      <div class="gallery-item" data-idx="11"><img src="https://raw.githubusercontent.com/davidrgz12/pisoandia/master/fotos/001.jpg" alt="Paseo de La Concha"></div>
+    <div class="gallery-track-wrap" id="galleryWrap">
+      <div class="gallery-track" id="galleryTrack"></div>
     </div>
   </section>
 
@@ -815,24 +817,79 @@
     }, { threshold: 0.12 });
     reveals.forEach(el => observer.observe(el));
 
-    // Gallery lightbox
-    const galleryImages = [
-      BASE + 'hero2.jpg',
-      BASE + '040.jpg', BASE + '020.jpg', BASE + '030.jpg',
-      BASE + '050.jpg', BASE + '070.jpg', BASE + '060.jpg',
-      BASE + '080.jpg', BASE + '100.jpg', BASE + '090.jpg',
-      BASE + '110.jpg', BASE + '001.jpg'
-    ];
-    let currentLightbox = 0;
+    // Gallery carousel + lightbox
+    const G = BASE + 'Grupo%20Tom%C3%A9%20-%20Andia%2011%20-%202dcha%20-%20Donostia%20-%20';
+    const galleryNums = [13,18,23,30,37,41,48,54,59,67,73,80,87,93,100,108,116,122,128,133];
+    const galleryImages = galleryNums.map(n => G + String(n).padStart(3,'0') + '.jpg');
 
-    document.querySelectorAll('.gallery-item').forEach(item => {
-      item.addEventListener('click', () => {
-        currentLightbox = parseInt(item.dataset.idx);
-        openLightbox(currentLightbox);
-      });
+    const track    = document.getElementById('galleryTrack');
+    const wrap     = document.getElementById('galleryWrap');
+    const counter  = document.getElementById('galleryCounter');
+    const btnPrev  = document.getElementById('galleryPrev');
+    const btnNext  = document.getElementById('galleryNext');
+    let currentSlide = 0;
+    let isDragging = false;
+
+    // Build slides
+    galleryImages.forEach((src, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'gallery-slide';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Interior ' + (i + 1);
+      img.loading = i < 4 ? 'eager' : 'lazy';
+      slide.appendChild(img);
+      track.appendChild(slide);
+      slide.addEventListener('click', () => { if (!isDragging) openLightbox(i); });
     });
 
+    function visibleCount() { return window.innerWidth < 600 ? 1 : 2; }
+
+    function updateCarousel() {
+      const slides = track.querySelectorAll('.gallery-slide');
+      if (!slides.length) return;
+      const slideW = slides[0].offsetWidth + 10;
+      track.style.transform = 'translateX(-' + (currentSlide * slideW) + 'px)';
+      counter.textContent = (currentSlide + 1) + ' / ' + galleryImages.length;
+      btnPrev.disabled = currentSlide === 0;
+      btnNext.disabled = currentSlide >= galleryImages.length - visibleCount();
+    }
+
+    btnPrev.addEventListener('click', () => {
+      if (currentSlide > 0) { currentSlide--; updateCarousel(); }
+    });
+    btnNext.addEventListener('click', () => {
+      if (currentSlide < galleryImages.length - visibleCount()) { currentSlide++; updateCarousel(); }
+    });
+
+    // Mouse drag
+    let dragStartX = 0;
+    wrap.addEventListener('mousedown', e => { dragStartX = e.clientX; isDragging = false; wrap.classList.add('dragging'); });
+    wrap.addEventListener('mousemove', e => { if (wrap.classList.contains('dragging') && Math.abs(e.clientX - dragStartX) > 8) isDragging = true; });
+    wrap.addEventListener('mouseup', e => {
+      wrap.classList.remove('dragging');
+      const diff = e.clientX - dragStartX;
+      if (Math.abs(diff) > 50) { diff < 0 ? btnNext.click() : btnPrev.click(); }
+      setTimeout(() => { isDragging = false; }, 0);
+    });
+    wrap.addEventListener('mouseleave', () => wrap.classList.remove('dragging'));
+
+    // Touch swipe
+    let touchStartX = 0;
+    wrap.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    wrap.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(diff) > 50) { diff < 0 ? btnNext.click() : btnPrev.click(); }
+    });
+
+    window.addEventListener('resize', updateCarousel);
+    setTimeout(updateCarousel, 100);
+
+    // Lightbox
+    let currentLightbox = 0;
+
     function openLightbox(idx) {
+      currentLightbox = idx;
       document.getElementById('lightboxImg').src = galleryImages[idx];
       document.getElementById('lightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
