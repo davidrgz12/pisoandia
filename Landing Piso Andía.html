@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calle Andía, 11 — Donostia · San Sebastián</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #F6F2EC;
+      --cream-2:    #EDE8DF;
+      --dark:       #191512;
+      --mid:        #3C3430;
+      --gray:       #8A837A;
+      --gold:       #B8945A;
+      --gold-light: #D4B07E;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 80px;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(25, 21, 18, 0.94);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo { height: 36px; opacity: 0.95; }
+    .nav-logo-text {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-cta {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 10px 24px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      display: flex; align-items: flex-end;
+      padding-bottom: 80px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('fotos/040.jpg') center center / cover no-repeat;
+      transform: scale(1.04);
+      transition: transform 0.1s linear;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,11,8,0.82) 0%, rgba(15,11,8,0.28) 55%, rgba(15,11,8,0.08) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 64px;
+      max-width: 960px;
+    }
+    .hero-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero-address {
+      font-family: var(--serif);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 300;
+      line-height: 1.0;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .hero-city {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 36px;
+    }
+    .hero-price {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.03em;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 36px; right: 64px; z-index: 2;
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--sans); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+    .hero-scroll-line {
+      width: 48px; height: 1px;
+      background: rgba(255,255,255,0.3);
+      position: relative; overflow: hidden;
+    }
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: var(--gold-light);
+      animation: slideline 2s ease-in-out infinite;
+    }
+    @keyframes slideline { 0%{left:-100%} 100%{left:100%} }
+
+    /* ─── STATS STRIP ─── */
+    .stats-strip {
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat {
+      padding: 40px 32px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      text-align: center;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 48px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    /* ─── INTRO ─── */
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 640px;
+    }
+    .intro-image {
+      overflow: hidden;
+    }
+    .intro-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .intro-image:hover img { transform: scale(1.03); }
+    .intro-text {
+      background: var(--cream-2);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 72px;
+    }
+    .section-eyebrow {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .intro-text h2 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 3.5vw, 56px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--dark);
+      margin-bottom: 28px;
+    }
+    .intro-text p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--mid);
+      max-width: 480px;
+    }
+    .intro-text p + p { margin-top: 16px; }
+
+    /* ─── GALLERY ─── */
+    .gallery-section { background: var(--dark); padding: 80px 0 0; }
+    .gallery-header {
+      padding: 0 64px 56px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+    }
+    .gallery-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 60px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .gallery-header p {
+      font-size: 13px;
+      color: var(--gray);
+      text-align: right;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 360px;
+      gap: 3px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      filter: brightness(0.92);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: brightness(1.02);
+    }
+    .gallery-item.wide  { grid-column: span 2; }
+    .gallery-item.tall  { grid-row: span 2; }
+
+    /* ─── CARACTERÍSTICAS ─── */
+    .features {
+      background: var(--cream);
+      padding: 120px 64px;
+    }
+    .features-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    .features-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 4vw, 64px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .features-header p {
+      font-size: 14px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--cream-2);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .feature-group {
+      padding: 48px 40px;
+      border-right: 1px solid var(--cream-2);
+      border-bottom: 1px solid var(--cream-2);
+    }
+    .feature-group:nth-child(3n) { border-right: none; }
+    .feature-group:nth-last-child(-n+3) { border-bottom: none; }
+    .feature-group-title {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .feature-list {
+      list-style: none;
+    }
+    .feature-list li {
+      font-size: 14px;
+      color: var(--mid);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--cream-2);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .feature-list li:last-child { border-bottom: none; }
+    .feature-list li::before {
+      content: '';
+      display: block;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ─── MAPA ─── */
+    .map-section {
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .map-text {
+      padding: 80px 72px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .map-text h2 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 3.5vw, 54px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+    .map-text p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--gray);
+      max-width: 420px;
+    }
+    .map-tags {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 36px;
+    }
+    .map-tag {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 8px 18px;
+    }
+    .map-embed {
+      position: relative;
+      overflow: hidden;
+    }
+    .map-embed iframe {
+      width: 100%; height: 100%;
+      border: none;
+      filter: grayscale(20%) contrast(1.05);
+    }
+
+    /* ─── VIDEO ─── */
+    .video-section {
+      background: var(--cream-2);
+      padding: 100px 64px;
+      text-align: center;
+    }
+    .video-section h2 {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 60px);
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+    .video-placeholder {
+      max-width: 900px;
+      margin: 48px auto 0;
+      aspect-ratio: 16/9;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .video-placeholder-img {
+      position: absolute; inset: 0;
+      background: url('fotos/020.jpg') center / cover;
+      opacity: 0.35;
+    }
+    .video-placeholder-text {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+    .video-play-btn {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.6);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-play-btn svg { color: #fff; }
+    .video-placeholder-text p {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ─── CONTACTO ─── */
+    .contact-section {
+      background: var(--dark);
+      padding: 120px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .contact-left h2 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 4vw, 64px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .contact-left p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--gray);
+      margin-bottom: 40px;
+    }
+    .contact-detail {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+    }
+    .contact-detail strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 400;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 8px; }
+    .form-field label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+      appearance: none;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .form-field input:focus,
+    .form-field textarea:focus { border-color: var(--gold); }
+    .form-field textarea { min-height: 120px; }
+    .form-submit {
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 18px 40px;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--gold-light); }
+    .form-success {
+      display: none;
+      padding: 24px;
+      background: rgba(184,148,90,0.12);
+      border: 1px solid rgba(184,148,90,0.3);
+      text-align: center;
+    }
+    .form-success p {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0E0B09;
+      padding: 48px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer .footer-logo { height: 28px; opacity: 0.6; }
+    footer .footer-logo-text {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+    footer .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em;
+      text-align: right;
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,0.95);
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+    .lightbox-inner img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      display: block;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -48px; right: 0;
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      background: none; border: none;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: #fff; }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      color: rgba(255,255,255,0.5);
+      font-size: 32px;
+      cursor: pointer;
+      padding: 16px;
+      transition: color 0.2s;
+    }
+    .lightbox-nav:hover { color: #fff; }
+    .lightbox-prev { left: -64px; }
+    .lightbox-next { right: -64px; }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .hero-content { padding: 0 32px; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3) { border-right: 1px solid rgba(255,255,255,0.07); }
+      .intro { grid-template-columns: 1fr; }
+      .intro-image { height: 420px; }
+      .intro-text { padding: 56px 32px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 280px; }
+      .gallery-item.wide { grid-column: span 1; }
+      .features { padding: 80px 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-group { border-right: none; }
+      .feature-group:nth-last-child(-n+3) { border-bottom: 1px solid var(--cream-2); }
+      .feature-group:last-child { border-bottom: none; }
+      .map-section { grid-template-columns: 1fr; }
+      .map-embed { height: 360px; }
+      .map-text { padding: 56px 32px; }
+      .contact-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+      footer .footer-copy { text-align: center; }
+      .gallery-header { padding: 0 24px 40px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-content { padding: 0 24px; }
+      .hero-scroll { right: 24px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.wide { grid-column: span 1; }
+      .gallery-item.tall { grid-row: span 1; }
+      .video-section { padding: 72px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <img src="logo.png" class="nav-logo" alt="Grupo Tomé" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="nav-logo-text" style="display:none">Grupo Tomé</span>
+    <a href="#contacto" class="nav-cta">Solicitar visita</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-label">Vivienda exclusiva — Donostia · San Sebastián</span>
+      <h1 class="hero-address">Calle Andía, 11</h1>
+      <p class="hero-city">Frente al Ayuntamiento · Vistas a la Bahía de La Concha</p>
+      <p class="hero-price">2.750.000 €</p>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('datos').scrollIntoView()">
+      <span>Descubrir</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip" id="datos">
+    <div class="stat reveal">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Dormitorios en suite</div>
+    </div>
+    <div class="stat reveal" style="transition-delay:0.1s">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Baños completos</div>
+    </div>
+    <div class="stat reveal" style="transition-delay:0.2s">
+      <div class="stat-num" style="font-size:32px;padding-top:8px">Alta<br>gama</div>
+      <div class="stat-label">Reforma integral</div>
+    </div>
+    <div class="stat reveal" style="transition-delay:0.3s">
+      <div class="stat-num" style="font-size:22px;padding-top:12px">La<br>Concha</div>
+      <div class="stat-label">Vista a la bahía</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="intro-image">
+      <img src="fotos/hero2.jpg" alt="Salón comedor con vistas al Ayuntamiento">
+    </div>
+    <div class="intro-text reveal">
+      <span class="section-eyebrow">La propiedad</span>
+      <h2>Un piso singular<br>en el corazón<br><em>de Donostia</em></h2>
+      <p>Ubicado en Calle Andía frente al Ayuntamiento, este piso ofrece una de las vistas más privilegiadas de San Sebastián: el palacio consistorial Belle Époque enmarcado por palmeras, con el monte Urgull al fondo y la Bahía de La Concha a un paso.</p>
+      <p>Completamente reformado con materiales de primera línea: mármol Calacatta en cocina y baños, suelo radiante en toda la vivienda, grifería de alta gama y electrodomésticos italianos. Un proyecto de interiorismo cuidado al detalle.</p>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="galeria">
+    <div class="gallery-header">
+      <h2 class="reveal">Galería<br><em>de imágenes</em></h2>
+      <p class="reveal" style="transition-delay:0.15s">Haz clic en cualquier imagen<br>para ampliarla</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-item wide" data-idx="0"><img src="fotos/030.jpg" alt="Cocina y comedor"></div>
+      <div class="gallery-item" data-idx="1"><img src="fotos/020.jpg" alt="Salón"></div>
+      <div class="gallery-item" data-idx="2"><img src="fotos/040.jpg" alt="Vista Ayuntamiento"></div>
+      <div class="gallery-item" data-idx="3"><img src="fotos/050.jpg" alt="Cocina detalle"></div>
+      <div class="gallery-item wide" data-idx="4"><img src="fotos/080.jpg" alt="Dormitorio principal"></div>
+      <div class="gallery-item" data-idx="5"><img src="fotos/060.jpg" alt="Dormitorio"></div>
+      <div class="gallery-item" data-idx="6"><img src="fotos/100.jpg" alt="Baño suite"></div>
+      <div class="gallery-item" data-idx="7"><img src="fotos/070.jpg" alt="Baño mármol"></div>
+      <div class="gallery-item wide" data-idx="8"><img src="fotos/001.jpg" alt="La Concha"></div>
+      <div class="gallery-item" data-idx="9"><img src="fotos/110.jpg" alt="Detalle dormitorio"></div>
+      <div class="gallery-item" data-idx="10"><img src="fotos/120.jpg" alt="Dormitorio doble"></div>
+      <div class="gallery-item" data-idx="11"><img src="fotos/010.jpg" alt="Entrada"></div>
+    </div>
+  </section>
+
+  <!-- CARACTERÍSTICAS -->
+  <section class="features" id="caracteristicas">
+    <div class="features-header reveal">
+      <span class="section-eyebrow">Todo incluido</span>
+      <h2>Características<br><em>de la vivienda</em></h2>
+    </div>
+    <div class="features-grid reveal" style="transition-delay:0.15s">
+      <div class="feature-group">
+        <div class="feature-group-title">Distribución</div>
+        <ul class="feature-list">
+          <li>4 dormitorios con baño en suite</li>
+          <li>1 aseo de cortesía</li>
+          <li>Salón comedor de gran superficie</li>
+          <li>Cocina abierta al comedor</li>
+          <li>Trastero independiente</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <div class="feature-group-title">Calidades</div>
+        <ul class="feature-list">
+          <li>Reforma integral de alta gama</li>
+          <li>Cocina con electrodomésticos italianos</li>
+          <li>Grifería de primera marca</li>
+          <li>Mármol Calacatta en cocina y baños</li>
+          <li>Suelo radiante en toda la vivienda</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <div class="feature-group-title">Confort &amp; Domótica</div>
+        <ul class="feature-list">
+          <li>Aire acondicionado</li>
+          <li>Cortinas motorizadas</li>
+          <li>TV motorizada en techo con giro 360°</li>
+          <li>Iluminación LED integrada</li>
+          <li>Domótica y climatización por zonas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <section class="map-section" id="ubicacion">
+    <div class="map-text reveal">
+      <span class="section-eyebrow">Ubicación privilegiada</span>
+      <h2>Frente al Ayuntamiento,<br><em>a pasos de La Concha</em></h2>
+      <p>Calle Andía es una de las arterias más nobles de San Sebastián. A metros de la playa de La Concha, del Buen Pastor y del corazón gastronómico de la ciudad. Una ubicación irrepetible en el mercado premium vasco.</p>
+      <div class="map-tags">
+        <span class="map-tag">Playa La Concha · 3 min</span>
+        <span class="map-tag">Ayuntamiento · enfrente</span>
+        <span class="map-tag">Parte Vieja · 5 min</span>
+      </div>
+    </div>
+    <div class="map-embed">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.828!2d-1.9820!3d43.3215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd51aff4b2dc0001%3A0x0!2sCalle%20And%C3%ADa%2C%2011%2C%2020004%20Donostia-San%20Sebasti%C3%A1n!5e0!3m2!1ses!2ses!4v1685000000000!5m2!1ses!2ses"
+        title="Calle Andía 11, Donostia"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="video-section" id="video">
+    <span class="section-eyebrow reveal">Tour en vídeo</span>
+    <h2 class="reveal" style="transition-delay:0.1s">Visita virtual<br><em>de la propiedad</em></h2>
+    <div class="video-placeholder reveal" style="transition-delay:0.2s">
+      <div class="video-placeholder-img"></div>
+      <div class="video-placeholder-text">
+        <div class="video-play-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <p>Vídeo disponible bajo solicitud</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" style="background:var(--dark)">
+    <div class="contact-section">
+      <div class="contact-left reveal">
+        <span class="section-eyebrow" style="color:var(--gold)">Contacto</span>
+        <h2>¿Le interesa<br>esta propiedad?</h2>
+        <p>Rellene el formulario y nos pondremos en contacto con usted en menos de 24 horas para concertar una visita privada.</p>
+        <div class="contact-detail"><strong>Grupo Tomé</strong></div>
+        <div class="contact-detail">Donostia · San Sebastián</div>
+      </div>
+      <div class="contact-right reveal" style="transition-delay:0.15s">
+        <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Nombre completo</label>
+              <input type="text" placeholder="Su nombre" required>
+            </div>
+            <div class="form-field">
+              <label>Teléfono</label>
+              <input type="tel" placeholder="+34 600 000 000">
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" placeholder="correo@ejemplo.com" required>
+          </div>
+          <div class="form-field">
+            <label>Mensaje</label>
+            <textarea placeholder="Indíquenos sus preferencias o disponibilidad para visitar la propiedad…"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Enviar solicitud</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <p>Gracias. Nos pondremos en contacto con usted en breve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <img src="logo.png" class="footer-logo" alt="Grupo Tomé" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="footer-logo-text" style="display:none">Grupo Tomé</span>
+    </div>
+    <div class="footer-copy">
+      Calle Andía, 11 · Donostia · San Sebastián<br>
+      © 2026 Grupo Tomé. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightboxBtn()">Cerrar ✕</button>
+      <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+      <img id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" style="min-width:200px;min-height:200px">
+      <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+    </div>
+  </div>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Parallax hero
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroBg.style.transform = `scale(1.04) translateY(${y * 0.25}px)`;
+      }
+    }, { passive: true });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Gallery lightbox
+    const galleryImages = [
+      'fotos/030.jpg','fotos/020.jpg','fotos/040.jpg','fotos/050.jpg',
+      'fotos/080.jpg','fotos/060.jpg','fotos/100.jpg','fotos/070.jpg',
+      'fotos/001.jpg','fotos/110.jpg','fotos/120.jpg','fotos/010.jpg'
+    ];
+    let currentLightbox = 0;
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        currentLightbox = parseInt(item.dataset.idx);
+        openLightbox(currentLightbox);
+      });
+    });
+
+    function openLightbox(idx) {
+      document.getElementById('lightboxImg').src = galleryImages[idx];
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightboxBtn();
+    }
+    function closeLightboxBtn() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function lightboxNav(dir) {
+      currentLightbox = (currentLightbox + dir + galleryImages.length) % galleryImages.length;
+      document.getElementById('lightboxImg').src = galleryImages[currentLightbox];
+    }
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightboxBtn();
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+    });
+
+    // Form submit
+    function submitForm(e) {
+      e.preventDefault();
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
