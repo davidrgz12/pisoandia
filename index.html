@@ -23,7 +23,11 @@
       --sans:       'DM Sans', system-ui, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      max-width: 100%;
+    }
 
     body {
       background: var(--cream);
@@ -32,6 +36,8 @@
       font-weight: 300;
       line-height: 1.6;
       overflow-x: hidden;
+      max-width: 100%;
+      width: 100%;
     }
 
     /* ─── NAV ─── */
@@ -40,6 +46,7 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 48px;
       height: 80px;
+      width: 100%;
       transition: background 0.4s, backdrop-filter 0.4s;
     }
     nav.scrolled {
@@ -638,6 +645,12 @@
     .lightbox-nav:hover { color: #fff; }
     .lightbox-prev { left: -64px; }
     .lightbox-next { right: -64px; }
+
+    /* ─── OVERFLOW GUARD ─── */
+    section, footer, .stats-strip, .cta-bar, .video-section, .map-section {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
 
     /* ─── REVEAL ─── */
     .reveal {
