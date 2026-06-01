@@ -943,11 +943,11 @@
         <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
           <div class="form-field">
             <label>Nombre completo</label>
-            <input type="text" placeholder="Su nombre" required>
+            <input type="text" name="name" placeholder="Su nombre" required>
           </div>
           <div class="form-field">
             <label>WhatsApp</label>
-            <input type="tel" placeholder="+34 600 000 000" required>
+            <input type="tel" name="phone" placeholder="+34 600 000 000" required>
           </div>
           <button type="submit" class="form-submit">Enviar solicitud</button>
         </form>
@@ -1113,9 +1113,31 @@
     }, { threshold: 0.3 });
     videoObserver.observe(tourVideo);
 
-    // Form submit
+    // Form submit → GHL webhook + redirect
     function submitForm(e) {
       e.preventDefault();
+      var form = e.target;
+      var params = new URLSearchParams(window.location.search);
+
+      var payload = {
+        name:         form.name.value.trim(),
+        phone:        form.phone.value.trim(),
+        page_url:     window.location.href,
+        utm_source:   params.get('utm_source')   || '',
+        utm_medium:   params.get('utm_medium')   || '',
+        utm_campaign: params.get('utm_campaign') || '',
+        utm_content:  params.get('utm_content')  || '',
+        utm_term:     params.get('utm_term')     || '',
+        fbclid:       params.get('fbclid')       || ''
+      };
+
+      // Fire and forget — redirect always happens
+      fetch('https://services.leadconnectorhq.com/hooks/EOXQeTO7O96i3wwVY9L8/webhook-trigger/c6808e95-27c5-41e6-b73f-411431058d81', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+
       window.location.href = '/gracias.html';
     }
   </script>
