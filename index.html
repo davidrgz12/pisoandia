@@ -85,6 +85,7 @@
       display: flex; align-items: flex-start;
       padding-top: 210px;
       overflow: hidden;
+      isolation: isolate;
     }
     .hero-bg {
       position: absolute; inset: 0;
@@ -527,6 +528,7 @@
     .form-field input,
     .form-field textarea,
     .form-field select {
+      width: 100%;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
       color: #fff;
@@ -646,6 +648,19 @@
     .lightbox-prev { left: -64px; }
     .lightbox-next { right: -64px; }
 
+    @media (max-width: 768px) {
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      .lightbox-nav {
+        background: rgba(0,0,0,0.55);
+        width: 44px; height: 44px;
+        border-radius: 2px;
+        padding: 0;
+        font-size: 20px;
+        display: flex; align-items: center; justify-content: center;
+      }
+    }
+
     /* ─── OVERFLOW GUARD ─── */
     section, footer, .stats-strip, .cta-bar, .video-section, .map-section {
       max-width: 100%;
@@ -705,6 +720,7 @@
       }
       .hero-bg {
         background-position: center 65%;
+        transform: scale(1) !important; /* disable parallax scale on mobile */
       }
       .hero-content { padding: 0 24px; max-width: 100%; }
       .hero-address { font-size: 58px; }
@@ -712,6 +728,20 @@
       .hero-price { font-size: 34px; }
       .hero-discover { margin-top: 28px; }
       .gallery-slide { flex: 0 0 calc(90% - 5px); height: 300px; }
+      .form-submit { align-self: stretch; text-align: center; }
+      .footer { padding: 36px 24px; }
+    }
+
+    @media (max-width: 400px) {
+      nav { padding: 0 16px; height: 68px; }
+      .nav-cta { padding: 8px 14px; font-size: 10px; letter-spacing: 0.12em; }
+      .hero-address { font-size: 46px; }
+      .hero-city { font-size: 17px; }
+      .hero-price { font-size: 30px; }
+      .stat { padding: 32px 16px; }
+      .stat-num { font-size: 40px; }
+      .intro-text { padding: 44px 20px; }
+      .contact-section { padding: 48px 20px; }
     }
   </style>
 </head>
@@ -930,9 +960,10 @@
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // Parallax hero
+    // Parallax hero — disabled on mobile to prevent overflow/clipping issues
     const heroBg = document.getElementById('heroBg');
     window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768) return;
       const y = window.scrollY;
       if (y < window.innerHeight) {
         heroBg.style.transform = `scale(1.04) translateY(${y * 0.25}px)`;
