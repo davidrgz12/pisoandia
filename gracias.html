@@ -21,7 +21,9 @@
     (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '2019354492017726');
     fbq('track', 'PageView');
-    fbq('track', 'Lead');
+    // Leer event_id de la URL para deduplicar con CAPI
+    var eid = new URLSearchParams(window.location.search).get('eid') || ('lead_' + Date.now());
+    fbq('track', 'Lead', {}, { eventID: eid });
   </script>
   <noscript>
     <img height="1" width="1" style="display:none"

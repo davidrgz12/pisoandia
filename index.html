@@ -1113,16 +1113,20 @@
     }, { threshold: 0.3 });
     videoObserver.observe(tourVideo);
 
-    // Form submit → GHL webhook + redirect
+    // Form submit → n8n webhook + redirect
     function submitForm(e) {
       e.preventDefault();
       var form = e.target;
       var params = new URLSearchParams(window.location.search);
 
+      // event_id compartido para deduplicación pixel ↔ CAPI
+      var eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+
       var payload = {
         name:         form.name.value.trim(),
         phone:        form.phone.value.trim(),
         page_url:     window.location.href,
+        event_id:     eventId,
         utm_source:   params.get('utm_source')   || '',
         utm_medium:   params.get('utm_medium')   || '',
         utm_campaign: params.get('utm_campaign') || '',
@@ -1138,7 +1142,8 @@
         body: JSON.stringify(payload)
       }).catch(function(){});
 
-      window.location.href = '/gracias.html';
+      // Pasar event_id a gracias.html para deduplicar con el pixel de navegador
+      window.location.href = '/gracias.html?eid=' + eventId;
     }
   </script>
 </body>
